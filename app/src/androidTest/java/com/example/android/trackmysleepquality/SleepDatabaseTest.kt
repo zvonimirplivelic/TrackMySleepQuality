@@ -23,6 +23,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.database.SleepDatabaseDao
 import com.example.android.trackmysleepquality.database.SleepNight
+import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
@@ -72,7 +73,11 @@ class SleepDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun getAllNights() {
-        sleepDao.getAllNights()
+    fun clearAllNights() {
+        val night = SleepNight()
+        sleepDao.insert(night)
+
+        sleepDao.clear()
+        assertEquals(sleepDao.getAllNights().value?.size, null)
     }
 }
