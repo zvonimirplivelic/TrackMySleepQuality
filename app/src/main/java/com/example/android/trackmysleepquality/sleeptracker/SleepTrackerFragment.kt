@@ -54,15 +54,15 @@ class SleepTrackerFragment : Fragment() {
         })
         binding.sleepList.adapter = adapter
 
-        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, {
             it?.let {
-                adapter.submitList(it)
+                adapter.submitList(it as MutableList<DataItem>)
             }
         })
 
         binding.setLifecycleOwner(this)
 
-        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
+        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, {
             if (it == true) {
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
@@ -73,7 +73,7 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
-        sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, Observer { night ->
+        sleepTrackerViewModel.navigateToSleepQuality.observe(viewLifecycleOwner, { night ->
             night?.let {
                 this.findNavController().navigate(
                         SleepTrackerFragmentDirections
@@ -93,7 +93,7 @@ class SleepTrackerFragment : Fragment() {
         })
 
         val manager = GridLayoutManager(activity, 3)
-        manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup()  {
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int) = when (position) {
                 0 -> 3
                 else -> 1
