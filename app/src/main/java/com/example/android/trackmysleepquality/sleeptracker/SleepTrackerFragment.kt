@@ -54,9 +54,9 @@ class SleepTrackerFragment : Fragment() {
         })
         binding.sleepList.adapter = adapter
 
-        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, {
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
             it?.let {
-                adapter.submitList(it as MutableList<DataItem>)
+                adapter.addHeaderAndSubmitList(it)
             }
         })
 
